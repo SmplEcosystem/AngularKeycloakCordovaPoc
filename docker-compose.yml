@@ -14,8 +14,8 @@ services:
       DB_VENDOR: mariadb
       DB_PORT: 3306
     ports:
-      - "8080:8080"
-      - "9990:9000"
+      - "192.168.1.118:8080:8080"
+      - "192.168.1.118:9990:9000"
   auth-db:
     image: mariadb:latest
     environment:
