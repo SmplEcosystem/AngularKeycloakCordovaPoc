@@ -5,7 +5,6 @@ import {
 } from '@angular/router';
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 import { KeycloakConfigObject } from 'src/environments/keycloakconfig';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -14,10 +13,7 @@ export class AuthGuard extends KeycloakAuthGuard {
     protected readonly keycloak: KeycloakService,
     protected readonly route: Router,
   ) {
-    console.log('before', keycloak.isLoggedIn())
     super(route, keycloak);
-    console.log('after')
-
   }
   /**
    *

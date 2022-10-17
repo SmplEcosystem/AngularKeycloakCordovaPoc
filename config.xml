@@ -9,4 +9,7 @@
      <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <platform name="android">
+      <preference name="Scheme" value="http" />
+      </platform>
 </widget>

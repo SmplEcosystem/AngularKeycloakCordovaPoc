@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
+import { KeycloakConfigObject } from 'src/environments/keycloakconfig';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,28 +9,42 @@ import { KeycloakService } from 'keycloak-angular';
 })
 export class AppComponent {
   title = 'AngularKeycloakCordovaPoc';
-
   public authenticated: boolean = false;
 
-  constructor(private keycloakService: KeycloakService) {}
+  constructor(private keycloakService: KeycloakService, private ngZone: NgZone) { }
 
   ngOnInit() {
-    this.checkLogin();
+    if (window.cordova === undefined) {
+      this.checkLogin();
+    } else {
+      document.addEventListener("deviceready", () => {
+        setTimeout(() => {
+          this.ngZone.run(() => {
+            this.checkLogin();
+          });
+        })
+      }, false);
+    }
   }
 
-  checkLogin() {
-    this.keycloakService.isLoggedIn().then((isLoggedIn) => this.authenticated = isLoggedIn);
+  async checkLogin() {
+    const isLoggedIn = await this.keycloakService.isLoggedIn();
+    this.authenticated = isLoggedIn;
+    console.log("🚀 ~ file: app.component.ts ~ line 23 ~ AppComponent ~ checkLogin ~ isLoggedIn", isLoggedIn);
+    if (!this.authenticated) {
+      this.login();
+    }
   }
 
-  register() {
-    this.keycloakService.register().then(() => this.checkLogin());
+  async register() {
+    this.keycloakService.register().then(() => this.checkLogin()).catch(error => console.log(error));;
   }
 
-  login() {
-    this.keycloakService.login().then(() => this.checkLogin());
+  async login() {
+    this.keycloakService.login({ redirectUri: KeycloakConfigObject.redirectURL }).then(() => this.checkLogin()).catch(error => console.log(error));
   }
 
-  logout() {
-    this.keycloakService.logout().then();
+  async logout() {
+    this.keycloakService.logout().then(() => this.checkLogin().catch(error => console.log(error)));
   }
 }

@@ -2,7 +2,6 @@ import { KeycloakService } from "keycloak-angular";
 import { v4 as uuidv4 } from 'uuid';
 import { KeycloakConfigObject } from "../environments/keycloakconfig";
 import { KeycloakModel } from "./model/keycloak-config.model";
-declare var cordova: any;
 
 /**
  *
@@ -13,18 +12,10 @@ export function initializeKeycloak(keycloak: KeycloakService): any {
   try {
     return () => {
       if (window.cordova === undefined) {
-        return initKeycloakForWeb(keycloak)
+        return initKeycloak(keycloak);
       } else {
         return document.addEventListener("deviceready", () => {
-          console.log("🚀 ~ file: app-init.ts ~ line 6 ~ return ~ cordova", cordova);
-          const browser = cordova.InAppBrowser.open(getUrl(), "_blank");
-          console.log("🚀 ~ file: app-init.ts ~ line 14 ~ document.addEventListener ~ browser", browser);
-          browser.addEventListener('loadstart', (event: any) => {
-            console.log("🚀 ~ file: app-init.ts ~ line 15 ~ browser.on ~ event", event);
-            if (event.url.indexOf(KeycloakConfigObject.redirectURL) > -1) {
-              browser.close();
-            }
-          });
+          return initKeycloak(keycloak);
         }, false);
       }
     }
@@ -59,11 +50,11 @@ function getRealmUrl(config: KeycloakModel): string {
 
 /**
  *
- * @param keycloak keycloack serverice
+ * @param keycloak keycloack service
  * @returns void
  */
 
-async function initKeycloakForWeb(keycloak: KeycloakService): Promise<boolean> {
+async function initKeycloak(keycloak: KeycloakService): Promise<boolean> {
   try {
     return await keycloak.init({
       config: {
@@ -72,7 +63,7 @@ async function initKeycloakForWeb(keycloak: KeycloakService): Promise<boolean> {
         clientId: KeycloakConfigObject.clientId,
       },
       initOptions: {
-        onLoad:'check-sso',
+        adapter: window.cordova === undefined ? 'default' : 'cordova',
         checkLoginIframe: false,
         redirectUri: KeycloakConfigObject.redirectURL,
         pkceMethod: 'S256'

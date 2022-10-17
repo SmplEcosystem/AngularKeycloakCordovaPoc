@@ -23,7 +23,7 @@ import { initializeKeycloak } from './keycloak-init';
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,
       multi: true,
-      deps: [KeycloakService]
+      deps: [KeycloakService],
     },
   ],
   bootstrap: [AppComponent]

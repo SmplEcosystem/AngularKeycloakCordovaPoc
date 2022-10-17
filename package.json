@@ -37,7 +37,6 @@
     "@types/jasmine": "~4.0.0",
     "cordova-android": "^10.1.2",
     "cordova-browser": "^6.0.0",
-    "cordova-plugin-deeplinks": "^1.1.1",
     "jasmine-core": "~4.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
@@ -52,8 +51,7 @@
       "browser"
     ],
     "plugins": {
-      "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-deeplinks": {}
+      "cordova-plugin-inappbrowser": {}
     }
   }
 }
