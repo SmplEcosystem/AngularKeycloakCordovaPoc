@@ -1,7 +1,7 @@
 import { KeycloakService } from "keycloak-angular";
 import { v4 as uuidv4 } from 'uuid';
 import { KeycloakConfigObject } from "../environments/keycloakconfig";
-import { KeycloakModel } from "./model/keycloak-config.model";
+import { KeycloakModel } from "./models/keycloak-config.model";
 
 /**
  *

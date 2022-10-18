@@ -1,12 +1,1 @@
-<div>
-  <ng-container *ngIf="authenticated; else notLoggedIn">
-      <h2>Connected !</h2>
-      <button color="danger" expand="block" fill="outline" (click)="logout()">Log out</button>
-  </ng-container>
-  <ng-template #notLoggedIn>
-      <h2>Not connected</h2>
-      <button (click)="login()">Log in</button>
-      <button  (click)="register()">Create account</button>
-  </ng-template>
-</div>
 <router-outlet></router-outlet>
