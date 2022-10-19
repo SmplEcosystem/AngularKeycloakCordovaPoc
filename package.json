@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "android-build": "ng build && cordova build android",
-    "ios-build": "ng build && cordova build ios"
+    "ios-build": "ng build && cordova build ios",
+    "android-build-run": "ng build && cordova run android",
+    "ios-build-run": "ng build && cordova run ios"
   },
   "private": true,
   "dependencies": {
