@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.setToken();
-    }, 1000);
+    }, 500);
   }
 
   private async setToken(): Promise<void> {

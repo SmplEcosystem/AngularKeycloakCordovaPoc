@@ -14,14 +14,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     if (window.cordova === undefined) {
-      this.ngZone.run(() => {
         this.isTokenValid();
-      })
     } else {
       document.addEventListener("deviceready", () => {
-        this.ngZone.run(() => {
+        setTimeout(() => {
           this.isTokenValid();
-        })
+        }, 500);
       }, false);
     }
   }
@@ -29,7 +27,7 @@ export class HomeComponent implements OnInit {
   private async isTokenValid(): Promise<void> {
     const user = await this.authService.getUserInfo();
     console.log("🚀 ~ file: home.component.ts ~ line 33 ~ HomeComponent ~ isTokenValid ~ user", user);
-    if (user?.name) {
+    if (user?.preferred_username) {
       this.router.navigate(['/profile']);
     }
   }
