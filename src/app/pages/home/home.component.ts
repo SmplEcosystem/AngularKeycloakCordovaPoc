@@ -14,12 +14,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     if (window.cordova === undefined) {
-        this.isTokenValid();
+      this.isTokenValid();
     } else {
       document.addEventListener("deviceready", () => {
-        setTimeout(() => {
+        this.ngZone.run(() => {
           this.isTokenValid();
-        }, 500);
+        })
       }, false);
     }
   }

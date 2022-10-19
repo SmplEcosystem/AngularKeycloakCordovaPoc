@@ -20,7 +20,12 @@ export class ProfileComponent implements OnInit {
   private async setToken(): Promise<void> {
     try {
       const token = await this.keycloakService.getToken();
-      localStorage.setItem('token', token);
+      if (token?.length > 0) {
+        localStorage.setItem('token', token);
+      }
+      if (!localStorage.getItem('token')) {
+        this.router.navigate(['/home']);
+      }
       console.log("🚀 ~ file: profile.component.ts ~ line 16 ~ ProfileComponent ~ ngOnInit ~ token", token);
     } catch (error) {
       console.log("🚀 ~ file: profile.component.ts ~ line 24 ~ ProfileComponent ~ setToken ~ error", error);
@@ -28,6 +33,9 @@ export class ProfileComponent implements OnInit {
   }
 
   async logout(): Promise<void> {
-    this.keycloakService.logout().then(() => this.router.navigate(['/home'])).catch(error => console.log(error));
+    localStorage.removeItem('token');
+    this.keycloakService.logout('http://localhost:4200/home').then(() => {
+      this.router.navigate(['/home']);
+    }).catch(error => console.log(error));
   }
 }
