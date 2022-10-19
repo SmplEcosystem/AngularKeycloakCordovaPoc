@@ -1,6 +1,12 @@
 ## angular-build
-- Run `npm install` to install all the packages.
-- Run `npm start` to run on web
+- Run `yarn install` to install all the packages.
+- Run `yarn start` to run on web
+
+# add-platform
+- To add android platform `cordova platform add android`
+- To add ios platform `cordova platform add ios`
+
 ## cordova-build
-- To create android build run `npm run "android-build"`
-- To create ios build run `npm run "ios-build"`
+- To create android build run `yarn run "android-build"`
+- To create ios build run `yarn run "ios-build"`
+
